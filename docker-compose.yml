@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:11.6-alpine
+    environment:
+      POSTGRES_USER: mn_hh_user
+      POSTGRES_PASSWORD: mn_hh_password
+    ports:
+      - 5432:5432
+  elasticsearch:
+    image: elasticsearch:7.4.2
+    ports:
+      - 9300:9300
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+  redis:
+    image: redis:6.2.0
+    ports:
+      - 6379:6379

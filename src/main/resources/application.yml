@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public
+    username: mn_hh_user
+    password: mn_hh_password
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/postgres?currentSchema=public
+    username: mn_hh_user
+    password: mn_hh_password
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+      username: ''
+      password: ''
+  redis:
+    url: redis://localhost:6379
