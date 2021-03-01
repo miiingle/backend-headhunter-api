@@ -3,6 +3,7 @@ package net.miiingle.headhunter.api.presentation;
 import lombok.RequiredArgsConstructor;
 import net.miiingle.headhunter.api.core.PingService;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
+import net.miiingle.headhunter.api.repositories.RedisPingRepository;
 import org.elasticsearch.action.main.MainResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,5 +36,11 @@ public class PingController {
     @PostMapping("elasticsearch")
     public Mono<MainResponse> pingElasticsearch() {
         return pingService.pingElasticsearch();
+    }
+
+    //curl --header "Content-Type: application/json" --request POST http://localhost:8080/ping/redis
+    @PostMapping("redis")
+    public RedisPingRepository.RedisPing pingRedis() {
+        return pingService.pingRedis();
     }
 }
