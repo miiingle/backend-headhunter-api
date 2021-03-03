@@ -22,7 +22,7 @@ public class PingController {
 
     private final PingService pingService;
 
-    //curl --header "Content-Type: application/json" --request POST --data '{"ping":"pong"}' http://localhost:8080/ping/server
+    //curl --header "X-Amzn-Trace-Id: Root=1-67891233-abcdef012345678912345678" --header "Content-Type: application/json" --request POST --data '{"ping":"pong"}' http://localhost:8080/ping/server
     @PostMapping("server")
     public Mono<Map<String, Object>> pingServer(@RequestBody Map<String, Object> message) {
         log.info("Ping Server");

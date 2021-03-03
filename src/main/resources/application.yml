@@ -16,3 +16,6 @@ spring:
       password: ''
   redis:
     url: redis://localhost:6379
+  sleuth:
+    propagation:
+      type: aws
