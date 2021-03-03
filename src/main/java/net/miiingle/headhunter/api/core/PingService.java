@@ -1,6 +1,7 @@
 package net.miiingle.headhunter.api.core;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
 import net.miiingle.headhunter.api.repositories.RedisPingRepository;
 import org.elasticsearch.action.main.MainResponse;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PingService {
 
@@ -21,6 +23,7 @@ public class PingService {
     private final RedisPingRepository redisPingRepository;
 
     public Mono<Map<String, Object>> pingServer(Map<String, Object> message) {
+        log.info("Ping Server");
         return Mono.just(Map.of("message", message, "time", LocalDate.now()));
     }
 

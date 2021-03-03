@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: headhunter-api
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public
     username: mn_hh_user

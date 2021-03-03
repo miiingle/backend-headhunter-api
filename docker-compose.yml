@@ -18,3 +18,7 @@ services:
     image: redis:6.2.0
     ports:
       - 6379:6379
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - 9411:9411

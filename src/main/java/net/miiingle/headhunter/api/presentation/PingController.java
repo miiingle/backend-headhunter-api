@@ -1,6 +1,7 @@
 package net.miiingle.headhunter.api.presentation;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.miiingle.headhunter.api.core.PingService;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
 import net.miiingle.headhunter.api.repositories.RedisPingRepository;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("ping")
+@Slf4j
 @RequiredArgsConstructor
 public class PingController {
 
@@ -23,6 +25,7 @@ public class PingController {
     //curl --header "Content-Type: application/json" --request POST --data '{"ping":"pong"}' http://localhost:8080/ping/server
     @PostMapping("server")
     public Mono<Map<String, Object>> pingServer(@RequestBody Map<String, Object> message) {
+        log.info("Ping Server");
         return pingService.pingServer(message);
     }
 
