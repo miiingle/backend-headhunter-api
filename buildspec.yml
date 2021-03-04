@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - java --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 327229172692.dkr.ecr.us-east-1.amazonaws.com
+      - docker pull postgres:11.6-alpine
+      - docker pull redis:6.2.0
+      - docker pull openzipkin/zipkin:latest
+      - docker pull elasticsearch:7.4.2
+      - docker pull amazoncorretto:11
+      - docker images
+  build:
+    commands:
+      - docker-compose up
+      - ./gradlew clean test
+      - docker build . -t 327229172692.dkr.ecr.us-east-1.amazonaws.com/miiingle.net.headhunter_api:latest
+  post_build:
+    commands:
+      - docker push 327229172692.dkr.ecr.us-east-1.amazonaws.com/miiingle.net.headhunter_api:latest
