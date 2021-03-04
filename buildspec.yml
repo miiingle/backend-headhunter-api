@@ -15,7 +15,8 @@ phases:
       - docker images
   build:
     commands:
-      - docker-compose up
+      - docker-compose up -d
+      - sleep 20s
       - ./gradlew clean test
       - docker build . -t 327229172692.dkr.ecr.us-east-1.amazonaws.com/miiingle.net.headhunter_api:latest
   post_build:
