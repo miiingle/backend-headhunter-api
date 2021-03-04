@@ -6,7 +6,7 @@ phases:
       java: corretto11
     commands:
       - java --version
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 327229172692.dkr.ecr.us-east-1.amazonaws.com
+      - $(aws ecr get-login --no-include-email)
       - docker pull postgres:11.6-alpine
       - docker pull redis:6.2.0
       - docker pull openzipkin/zipkin:latest
@@ -18,7 +18,8 @@ phases:
       - docker-compose up -d
       - sleep 20s
       - ./gradlew clean test
-      - docker build . -t 327229172692.dkr.ecr.us-east-1.amazonaws.com/miiingle.net.headhunter_api:latest
+      - docker build . -t $CONTAINER_REPOSITORY_URL:latest -t $CONTAINER_REPOSITORY_URL:$CODEBUILD_BUILD_NUMBER
   post_build:
     commands:
-      - docker push 327229172692.dkr.ecr.us-east-1.amazonaws.com/miiingle.net.headhunter_api:latest
+      - docker push $CONTAINER_REPOSITORY_URL:$CODEBUILD_BUILD_NUMBER
+      - docker push $CONTAINER_REPOSITORY_URL:latest
