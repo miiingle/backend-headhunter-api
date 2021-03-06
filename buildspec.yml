@@ -18,7 +18,9 @@ phases:
       - docker-compose up -d
       - sleep 20s
       - ./gradlew clean test
-      - docker build . -t $CONTAINER_REPOSITORY_URL:latest -t $CONTAINER_REPOSITORY_URL:$CODEBUILD_BUILD_NUMBER
+      - ./gradlew bootBuildImage
+      - docker tag docker.io/library/headhunter-api:latest $CONTAINER_REPOSITORY_URL:latest
+      - docker tag docker.io/library/headhunter-api:latest $CONTAINER_REPOSITORY_URL:$CODEBUILD_BUILD_NUMBER
   post_build:
     commands:
       - docker push $CONTAINER_REPOSITORY_URL:$CODEBUILD_BUILD_NUMBER
