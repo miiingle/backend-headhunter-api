@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  postgres_integration:
+    image: postgres:11.6-alpine
+    environment:
+      POSTGRES_USER: mn_integ_hh_username
+      POSTGRES_PASSWORD: mn_integ_hh_password
+    ports:
+      - 5432:5432
+  elasticsearch_integration:
+    image: elasticsearch:7.4.2
+    depends_on:
+      - postgres_integration
+    ports:
+      - 9300:9300
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+  redis_integration:
+    image: redis:6.2.0
+    depends_on:
+      - elasticsearch_integration
+    ports:
+      - 6379:6379
+  zipkin_integration:
+    image: openzipkin/zipkin:latest
+    depends_on:
+      - redis_integration
+    ports:
+      - 9411:9411
+  application:
+    image: "docker.io/library/headhunter-api:latest"
+    depends_on:
+      - zipkin_integration
+    environment:
+      SERVER_PORT: "9999"
+      SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS: "elasticsearch_integration"
+      SPRING_ELASTICSEARCH_REST_URIS: "https://elasticsearch_integration:9300"
+      SPRING_REDIS_HOST: "redis_integration"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres_integration:5432/postgres?currentSchema=public"
+      SPRING_DATASOURCE_USERNAME: "mn_integ_hh_username"
+      SPRING_DATASOURCE_PASSWORD: "mn_integ_hh_password"
+      SPRING_R2DBC_URL: "r2dbc:postgresql://postgres_integration/postgres?currentSchema=public"
+      SPRING_R2DBC_USERNAME: "mn_integ_hh_username"
+      SPRING_R2DBC_PASSWORD: "mn_integ_hh_password"
+      SPRING_ZIPKIN_BASEURL: "http://zipkin_integration:9411"
+    ports:
+      - "8080:9999"
