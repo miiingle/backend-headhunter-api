@@ -6,10 +6,7 @@ import net.miiingle.headhunter.api.core.PingService;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
 import net.miiingle.headhunter.api.repositories.RedisPingRepository;
 import org.elasticsearch.action.main.MainResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -27,6 +24,12 @@ public class PingController {
     public Mono<Map<String, Object>> pingServer(@RequestBody Map<String, Object> message) {
         log.info("Ping Server");
         return pingService.pingServer(message);
+    }
+
+    //curl localhost:8080/ping/external
+    @GetMapping("external")
+    public Mono<String> pingOutside() {
+        return pingService.pingOutsideWorld();
     }
 
     //curl --header "Content-Type: application/json" --request POST http://localhost:8080/ping/postgres
