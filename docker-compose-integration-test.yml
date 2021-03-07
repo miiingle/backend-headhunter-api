@@ -33,6 +33,7 @@ services:
     depends_on:
       - zipkin_integration
     environment:
+      DEBUG: "true"
       SERVER_PORT: "9999"
       SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS: "elasticsearch_integration"
       SPRING_ELASTICSEARCH_REST_URIS: "https://elasticsearch_integration:9300"
@@ -43,6 +44,6 @@ services:
       SPRING_R2DBC_URL: "r2dbc:postgresql://postgres_integration/postgres?currentSchema=public"
       SPRING_R2DBC_USERNAME: "mn_integ_hh_username"
       SPRING_R2DBC_PASSWORD: "mn_integ_hh_password"
-      SPRING_ZIPKIN_BASEURL: "http://zipkin_integration:9411"
+      SPRING_ZIPKIN_BASE_URL: "http://zipkin_integration:9411"
     ports:
       - "8080:9999"

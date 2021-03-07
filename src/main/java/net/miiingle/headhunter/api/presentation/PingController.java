@@ -15,6 +15,9 @@ import java.util.Map;
 @RequestMapping("ping")
 @Slf4j
 @RequiredArgsConstructor
+// TODO: implement security
+// https://medium.com/devops-dudes/securing-spring-boot-rest-apis-with-keycloak-1d760b2004e
+// https://www.keycloak.org/getting-started/getting-started-docker
 public class PingController {
 
     private final PingService pingService;
