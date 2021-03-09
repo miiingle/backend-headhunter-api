@@ -11,7 +11,8 @@ spring:
     elasticsearch:
       client:
         reactive:
-          endpoints: localhost
+          endpoints: localhost:9200
+          useSsl: false
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public
     username: mn_hh_user
@@ -20,6 +21,9 @@ spring:
     url: r2dbc:postgresql://localhost:5432/postgres?currentSchema=public
     username: mn_hh_user
     password: mn_hh_password
+    properties:
+      ssl: false
+      sslMode: DISABLE
   elasticsearch:
     rest:
       uris: http://localhost:9200
@@ -37,3 +41,8 @@ spring:
       discovery:
         enabled: false
     discovery-client-enabled: false
+
+management:
+  endpoint:
+    health:
+      show-details: always
