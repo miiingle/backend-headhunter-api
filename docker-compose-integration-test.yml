@@ -29,7 +29,7 @@ services:
     ports:
       - 9411:9411
   application:
-    image: "docker.io/library/headhunter-api:latest"
+    image: "docker.io/library/headhunter-api:debug"
     depends_on:
       - zipkin_integration
     environment:
@@ -47,3 +47,4 @@ services:
       SPRING_ZIPKIN_BASE_URL: "http://zipkin_integration:9411"
     ports:
       - "8080:9999"
+      - "5005:5005"
