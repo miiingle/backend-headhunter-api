@@ -15,12 +15,12 @@ spring:
           useSsl: false
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public
-    username: mn_hh_user
-    password: mn_hh_password
+    username: postgres
+    password: secret_hunter
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/postgres?currentSchema=public
-    username: mn_hh_user
-    password: mn_hh_password
+    username: postgres
+    password: secret_hunter
     properties:
       ssl: true
       sslMode: REQUIRE
