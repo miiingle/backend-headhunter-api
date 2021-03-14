@@ -25,9 +25,9 @@ public class PingService {
     private final RedisPingRepository redisPingRepository;
     private final WebClient pingServer = WebClient.create("https://jsonplaceholder.typicode.com");
 
-    public Mono<Map<String, Object>> pingServer(Map<String, Object> message) {
+    public Mono<Map<String, Object>> pingServer() {
         log.info("Ping Server");
-        return Mono.just(Map.of("message", message, "time", LocalDate.now()));
+        return Mono.just(Map.of("message", "Test" + LocalDate.now(), "time", LocalDate.now()));
     }
 
     public Mono<String> pingOutsideWorld() {

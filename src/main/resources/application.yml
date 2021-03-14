@@ -21,9 +21,8 @@ spring:
     url: r2dbc:postgresql://localhost:5432/postgres?currentSchema=public
     username: mn_hh_user
     password: mn_hh_password
-    useSSL: true
     properties:
-      ssl: false
+      ssl: true
       sslMode: REQUIRE
   elasticsearch:
     rest:

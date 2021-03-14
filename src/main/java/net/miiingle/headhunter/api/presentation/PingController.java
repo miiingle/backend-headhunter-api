@@ -23,33 +23,38 @@ public class PingController {
     private final PingService pingService;
 
     //curl --header "X-Amzn-Trace-Id: Root=1-67891233-abcdef012345678912345678" --header "Content-Type: application/json" --request POST --data '{"ping":"pong"}' http://localhost:8080/ping/server
-    @PostMapping("server")
-    public Mono<Map<String, Object>> pingServer(@RequestBody Map<String, Object> message) {
+    //curl localhost:8080/ping/server
+    @GetMapping("server")
+    public Mono<Map<String, Object>> pingServer() {
         log.info("Ping Server");
-        return pingService.pingServer(message);
+        return pingService.pingServer();
     }
 
     //curl localhost:8080/ping/external
     @GetMapping("external")
     public Mono<String> pingOutside() {
+        log.info("Ping External API");
         return pingService.pingOutsideWorld();
     }
 
-    //curl --header "Content-Type: application/json" --request POST http://localhost:8080/ping/postgres
-    @PostMapping("postgres")
+    //curl localhost:8080/ping/postgres
+    @GetMapping("postgres")
     public Mono<PostgresPingRepository.PostgresPing> pingPostgres() {
+        log.info("Ping RDS");
         return pingService.pingPostgres();
     }
 
-    //curl --header "Content-Type: application/json" --request POST http://localhost:8080/ping/elasticsearch
-    @PostMapping("elasticsearch")
+    //curl localhost:8080/ping/elasticsearch
+    @GetMapping("elasticsearch")
     public Mono<MainResponse> pingElasticsearch() {
+        log.info("Ping ES");
         return pingService.pingElasticsearch();
     }
 
-    //curl --header "Content-Type: application/json" --request POST http://localhost:8080/ping/redis
-    @PostMapping("redis")
+    //curl localhost:8080/ping/redis
+    @GetMapping("redis")
     public RedisPingRepository.RedisPing pingRedis() {
+        log.info("Ping Cache");
         return pingService.pingRedis();
     }
 }
