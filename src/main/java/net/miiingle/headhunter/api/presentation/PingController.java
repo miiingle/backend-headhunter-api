@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.miiingle.headhunter.api.core.PingService;
 import net.miiingle.headhunter.api.core.RedisPing;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
-import org.elasticsearch.action.main.MainResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +47,7 @@ public class PingController {
 
     //curl localhost:8080/ping/elasticsearch
     @GetMapping("elasticsearch")
-    public Mono<MainResponse> pingElasticsearch() {
+    public Mono<Boolean> pingElasticsearch() {
         log.info("Ping ES");
         return pingService.pingElasticsearch();
     }

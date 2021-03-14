@@ -3,7 +3,6 @@ package net.miiingle.headhunter.api.core;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
-import org.elasticsearch.action.main.MainResponse;
 import org.springframework.data.elasticsearch.client.reactive.ReactiveElasticsearchClient;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.http.MediaType;
@@ -41,8 +40,8 @@ public class PingService {
         return postgresPingRepository.findById(1L);
     }
 
-    public Mono<MainResponse> pingElasticsearch() {
-      return reactiveElasticsearchClient.info();
+    public Mono<Boolean> pingElasticsearch() {
+      return reactiveElasticsearchClient.ping();
     }
 
     public Mono<RedisPing> pingRedis() {
