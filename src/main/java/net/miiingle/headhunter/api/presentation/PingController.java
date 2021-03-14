@@ -3,10 +3,12 @@ package net.miiingle.headhunter.api.presentation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.miiingle.headhunter.api.core.PingService;
+import net.miiingle.headhunter.api.core.RedisPing;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
-import net.miiingle.headhunter.api.repositories.RedisPingRepository;
 import org.elasticsearch.action.main.MainResponse;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -53,7 +55,7 @@ public class PingController {
 
     //curl localhost:8080/ping/redis
     @GetMapping("redis")
-    public RedisPingRepository.RedisPing pingRedis() {
+    public Mono<RedisPing> pingRedis() {
         log.info("Ping Cache");
         return pingService.pingRedis();
     }
