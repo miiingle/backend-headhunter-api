@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   postgres:
-    image: postgres:11.6-alpine
+    image: postgres:11.10-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret_hunter
@@ -18,18 +18,25 @@ services:
     image: redis:6.2.0
     ports:
       - 6379:6379
+  postgres_keycloak:
+    image: postgres:11.10-alpine
+    environment:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak_secret
   keycloak:
+    depends_on:
+      - postgres_keycloak
     image: quay.io/keycloak/keycloak:12.0.4
     ports:
-      - 8080:8080
+      - 8081:8080
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
+      DB_ADDR: postgres_keycloak
       DB_DATABASE: postgres
-      DB_USER: postgres
-      DB_PASSWORD: secret_hunter
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak_secret
       PROXY_ADDRESS_FORWARDING: "true"
   zipkin:
     image: openzipkin/zipkin:latest
