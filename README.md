@@ -8,3 +8,13 @@ App Server for the Headhunters Looking for Potential Hires
 ./gradlew clean bootjar
 docker build -f DEBUG-Dockerfile -t docker.io/library/headhunter-api:debug .
 ```
+
+## KeyCloak Login
+```shell
+curl \
+  -d "client_id=admin-cli" \
+  -d "username=admin" \
+  -d "password=admin" \   
+  -d "grant_type=password" \
+  "http://localhost:8081/auth/realms/master/protocol/openid-connect/token"
+```
