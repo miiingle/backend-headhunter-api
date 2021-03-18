@@ -7,6 +7,7 @@ For further reference, please consider the following sections:
 * [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.4.4-SNAPSHOT/gradle-plugin/reference/html/)
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.4.4-SNAPSHOT/gradle-plugin/reference/html/#build-image)
 * [Spring Native Reference Guide](https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/)
+* [OAuth2 Resource Server](https://docs.spring.io/spring-boot/docs/2.4.3/reference/htmlsingle/#boot-features-security-oauth2-server)
 * [Spring Data R2DBC](https://docs.spring.io/spring-boot/docs/2.4.3/reference/html/spring-boot-features.html#boot-features-r2dbc)
 * [Spring Data Reactive Redis](https://docs.spring.io/spring-boot/docs/2.4.3/reference/htmlsingle/#boot-features-redis)
 * [Spring Data Elasticsearch (Access+Driver)](https://docs.spring.io/spring-boot/docs/2.4.3/reference/htmlsingle/#boot-features-elasticsearch)

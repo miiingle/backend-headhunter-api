@@ -5,20 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import net.miiingle.headhunter.api.core.PingService;
 import net.miiingle.headhunter.api.core.RedisPing;
 import net.miiingle.headhunter.api.repositories.PostgresPingRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
 @RequestMapping("ping")
 @Slf4j
 @RequiredArgsConstructor
-// TODO: implement security
-// https://medium.com/devops-dudes/securing-spring-boot-rest-apis-with-keycloak-1d760b2004e
-// https://www.keycloak.org/getting-started/getting-started-docker
 public class PingController {
 
     private final PingService pingService;
@@ -57,5 +56,11 @@ public class PingController {
     public Mono<RedisPing> pingRedis() {
         log.info("Ping Cache");
         return pingService.pingRedis();
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("security")
+    public Mono<String> pingSecured(Mono<Principal> principal) {
+        return principal.map(Principal::getName);
     }
 }
