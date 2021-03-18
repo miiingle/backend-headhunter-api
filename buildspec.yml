@@ -7,10 +7,9 @@ phases:
     commands:
       - java --version
       - $(aws ecr get-login --no-include-email)
-      - docker pull postgres:11.6-alpine
+      - docker pull postgres:11.10-alpine
       - docker pull redis:6.2.0
-      - docker pull openzipkin/zipkin:latest
-      - docker pull elasticsearch:7.4.2
+      - docker pull elasticsearch:7.9.1
       - docker pull amazoncorretto:11
       - docker images
   build:
