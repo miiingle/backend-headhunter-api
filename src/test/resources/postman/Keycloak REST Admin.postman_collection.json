@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "7e5794d9-c480-482b-87ea-2a8a7da9a7a7",
+		"name": "Keycloak REST Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login KC Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"has access token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.environment.set(\"admin_access_token\", jsonData.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Forwarded-Host",
+						"value": "keycloakintegration:8080",
+						"type": "text"
+					},
+					{
+						"key": "X-Forwarded-Proto",
+						"value": "http",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{AUTH_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{AUTH_ADMIN_USERNAME}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{AUTH_ADMIN_PASSWORD}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{AUTH_BASE_URL}}/auth/realms/{{AUTH_REALM}}/protocol/openid-connect/token",
+					"host": [
+						"{{AUTH_BASE_URL}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"{{AUTH_REALM}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authserver Config",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"has access token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.environment.set(\"admin_access_token\", jsonData.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AUTH_BASE_URL}}/auth/realms/{{AUTH_REALM}}/.well-known/openid-configuration",
+					"host": [
+						"{{AUTH_BASE_URL}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"{{AUTH_REALM}}",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authserver Certs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"has access token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.environment.set(\"admin_access_token\", jsonData.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AUTH_BASE_URL}}/auth/realms/{{AUTH_REALM}}/protocol/openid-connect/certs",
+					"host": [
+						"{{AUTH_BASE_URL}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"{{AUTH_REALM}}",
+						"protocol",
+						"openid-connect",
+						"certs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Access Secured Method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{AUTH_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{AUTH_ADMIN_USERNAME}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{AUTH_ADMIN_PASSWORD}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{APP_HH_BASE_URL}}/ping/security",
+					"host": [
+						"{{APP_HH_BASE_URL}}"
+					],
+					"path": [
+						"ping",
+						"security"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Normal User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "headhunter-app",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "spring_app",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "spring_app_secret",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{AUTH_BASE_URL}}/auth/realms/{{AUTH_REALM}}/protocol/openid-connect/token",
+					"host": [
+						"{{AUTH_BASE_URL}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"{{AUTH_REALM}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
