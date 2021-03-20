@@ -72,6 +72,8 @@ services:
       DB_USER: keycloak
       DB_PASSWORD: keycloak_secret
       PROXY_ADDRESS_FORWARDING: "true"
+      FRONTEND_URL: "http://keycloakintegration:8080"
+      FORCE_BACKEND_URL_TO_FRONTEND_URL: "true"
 
   application:
     image: "docker.io/library/headhunter-api:latest"
