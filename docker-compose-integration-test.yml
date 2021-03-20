@@ -7,6 +7,12 @@ services:
       POSTGRES_PASSWORD: mn_integ_hh_password
     ports:
       - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U mn_integ_hh_username" ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
   elasticsearch_integration:
     image: elasticsearch:7.9.1
     depends_on:
@@ -16,23 +22,42 @@ services:
       - 9200:9200
     environment:
       - discovery.type=single-node
+    healthcheck:
+      test: [ "CMD-SHELL", "curl localhost:9200/_cluster/health --fail" ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
   redis_integration:
     image: redis:6.2.0
-    depends_on:
-      - elasticsearch_integration
     ports:
       - 6379:6379
+
   postgres_keycloak_integration:
     image: postgres:11.10-alpine
     environment:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: keycloak_secret
+    ports:
+      - 5433:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U keycloak" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   keycloakintegration:
     depends_on:
-      - postgres_keycloak_integration
+      postgres_keycloak_integration:
+        condition: service_healthy
     image: quay.io/keycloak/keycloak:12.0.4
     ports:
       - 8081:8080
+    healthcheck:
+      test: [ "CMD-SHELL", "curl localhost:8080/auth/realms/master --fail" ]
+      interval: 30s
+      timeout: 5s
+      retries: 15
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
@@ -42,11 +67,17 @@ services:
       DB_USER: keycloak
       DB_PASSWORD: keycloak_secret
       PROXY_ADDRESS_FORWARDING: "true"
+
   application:
     image: "docker.io/library/headhunter-api:latest"
     entrypoint: ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/home/app/application.jar"]
     depends_on:
-      - keycloakintegration
+      elasticsearch_integration:
+        condition: service_healthy
+      keycloakintegration:
+        condition: service_healthy
+      postgres_integration:
+        condition: service_healthy
     environment:
       DEBUG: "true"
       SERVER_PORT: "9999"
