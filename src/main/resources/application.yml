@@ -15,9 +15,9 @@ spring:
     url: r2dbc:postgresql://localhost:5432/postgres?currentSchema=public
     username: postgres
     password: secret_hunter
-    properties:
-      ssl: true
-      sslMode: REQUIRE
+#    properties:
+#      ssl: true
+#      sslMode: REQUIRE
   elasticsearch:
     rest:
       uris: http://localhost:9200
