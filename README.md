@@ -4,7 +4,9 @@
 App Server for the Headhunters Looking for Potential Hires
 
 ## Spring Initializer
-[Initializer](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.4.BUILD-SNAPSHOT&packaging=jar&jvmVersion=11&groupId=net.miiingle.headhunter&artifactId=headhunter-api&name=headhunter-api&description=Demo%20project%20for%20Spring%20Boot&packageName=net.miiingle.headhunter.api&dependencies=native,oauth2-resource-server,data-r2dbc,data-redis-reactive,data-elasticsearch,postgresql,lombok,webflux)
+[Initializer: Native](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.4.BUILD-SNAPSHOT&packaging=jar&jvmVersion=11&groupId=net.miiingle.headhunter&artifactId=headhunter-api&name=headhunter-api&description=Demo%20project%20for%20Spring%20Boot&packageName=net.miiingle.headhunter.api&dependencies=native,oauth2-resource-server,data-r2dbc,data-redis-reactive,data-elasticsearch,postgresql,lombok,webflux)
+
+[Initializer: Java Jar](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.4.RELEASE&packaging=jar&jvmVersion=11&groupId=net.miiingle.headhunter&artifactId=headhunter-api&name=headhunter-api&description=Demo%20project%20for%20Spring%20Boot&packageName=net.miiingle.headhunter.api&dependencies=oauth2-resource-server,data-r2dbc,data-redis-reactive,data-elasticsearch,postgresql,lombok,webflux,devtools,configuration-processor,actuator,testcontainers)
 
 ## Debug Build
 ```

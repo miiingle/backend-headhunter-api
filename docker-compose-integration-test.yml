@@ -77,7 +77,7 @@ services:
 
   application:
     image: "docker.io/library/headhunter-api:latest"
-    entrypoint: ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/home/app/application.jar"]
+#    entrypoint: ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/home/app/application.jar"]
     depends_on:
       redis_integration:
         condition: service_healthy
@@ -89,6 +89,7 @@ services:
         condition: service_healthy
     environment:
       DEBUG: "true"
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
       SERVER_PORT: "9999"
       SPRING_DATA_ELASTICSEARCH_CLIENT_REACTIVE_ENDPOINTS: "elasticsearch_integration"
       SPRING_ELASTICSEARCH_REST_URIS: "https://elasticsearch_integration:9300"
